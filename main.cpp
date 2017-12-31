@@ -2,12 +2,10 @@
 * @Author: Chris Holdt
 * @Date:   2017-12-31 16:27:37
 * @Last Modified by:   Christopher
-* @Last Modified time: 2017-12-31 16:35:51
+* @Last Modified time: 2017-12-31 17:31:02
 */
 
-#include <SPI.h>
 #include <Wire.h>
-#include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
 #define OLED_RESET -1
