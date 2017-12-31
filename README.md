@@ -1,2 +1,3 @@
-# ESP32-TempLightAndOLED
-Code to read temperature and light from a thermistor and photo resistor and display it on a 0.96" OLED I2C module.
+# ESP32 - Light, Temperature, OLED!
+
+Read temperature and light from a thermistor and photo resistor. Convert to Celsius and 0-100 then display the values on a 0.96" OLED I2C module.
