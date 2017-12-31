@@ -2,7 +2,7 @@
 * @Author: Chris Holdt
 * @Date:   2017-12-31 16:27:37
 * @Last Modified by:   Christopher
-* @Last Modified time: 2017-12-31 17:31:02
+* @Last Modified time: 2017-12-31 18:29:09
 */
 
 #include <Wire.h>
@@ -73,7 +73,8 @@ int getTemp() {
 	average /= SAMPLERATE;
 
 	// Convert to resistance
-	resistance = (4095 / average) - 1;
+	resistance = 4095 / average - 1;
+	resistance = SERIESRESISTOR / resistance;
 
 	/*
 	 * Use Steinhart equation (simplified B parameter equation) to convert resistance to kelvin
@@ -84,7 +85,12 @@ int getTemp() {
 	 * B  = Coefficent of the thermistor
 	 * To = Nominal temperature in kelvin
 	 */
-	kelvin = 1.0 / ( 1.0/(TEMPERATURENOMINAL+273.15) + (1/3950) * log(resistance/THERMISTORNOMINAL) );
+	kelvin = resistance/THERMISTORNOMINAL;								// R/Ro
+	kelvin = log(kelvin);																	// ln(R/Ro)
+	kelvin = (1.0/BCOEFFICIENT) * kelvin;									// 1/B * ln(R/Ro)
+	kelvin = (1.0/(TEMPERATURENOMINAL+273.15)) + kelvin;  // 1/To + 1/B * ln(R/Ro)
+	kelvin = 1.0/kelvin;																	// 1/( 1/To + 1/B * ln(R/Ro) )
+
 	// Convert Kelvin to Celsius
 	celsius = kelvin - 273.15;
 
